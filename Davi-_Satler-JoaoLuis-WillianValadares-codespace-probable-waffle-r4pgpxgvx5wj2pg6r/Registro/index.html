@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-size: 100%; background-repeat: no-repeat; background-image:url(https://wallpapers.com/images/high/fade-4k-background-oz5dphkxazbipggo.webp);">
+    <div class="caixa">
+        <form class="formulario" onsubmit="return false;"> 
+            <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 28px;">REGISTRE-SE</h3>
+            <label for="" class="flutuante" class="label">Nome de Usuário</label>
+            <input type="text" placeholder="   Nome de Usuário" id="login" class="entrada">
+            <label for="" class="flutuante" class="label">Senha</label>
+            <input type="password" placeholder="   Senha" id="senha" class="entrada">
+            <input type="password" placeholder="   Confirmar Senha" id="ConfirmarSenha" class="entrada">
+            <input type="button" class="botao" value="Registrar" onclick="registrar()">
+        </form>
+        <p class="register">Já tem uma conta? <a href="../Login/index.html">Login</a></p>
+    </div>
+
+    <script>
+        function registrar() {
+            var login = document.getElementById("login").value;
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("ConfirmarSenha").value;
+
+          
+            if (senha !== confirmarSenha) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            
+            if (login.trim() === "" || senha.trim() === "") {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+           
+            var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+            
+            if (usuarios.some(u => u.login === login)) {
+                alert("Usuário já existe. Tente outro nome.");
+                return;
+            }
+
+            
+            usuarios.push({ login: login, senha: senha });
+            localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+            alert("Usuário registrado com sucesso!");
+            window.location.href = "../Login/index.html"; 
+          }
+    </script>
+</body>
+</html>

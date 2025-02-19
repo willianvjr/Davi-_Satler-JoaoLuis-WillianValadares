@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de usuários</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-size: 100%; background-repeat: no-repeat; background-image:url(https://wallpapers.com/images/high/fade-4k-background-oz5dphkxazbipggo.webp);"></body>
+    <div class="box">
+        <div class="box2"> 
+    <h1 style="color: rgb(0, 0, 0);">Lista de usuários</h1>
+    <h3 style="color: rgb(0, 0, 0);">Total de usuários: <span id="contador">0</span></h3>
+    <input type="text" id="inputItem" placeholder="  Digite o usuário" class="desc"> <br>
+    <input type="text" id="inputDescricao" placeholder="  Digite a Descrição" class="desc"> <br>
+    </div>
+    <button id="adicionar" style="margin-left: 3px;">Adicionar Usuário</button>
+    <button id="apagarLista">Apagar Lista</button>
+    <button id="remover">Remover Usuário</button>
+    
+    <ul id="lista"></ul> 
+</div>
+    <script>
+        let itemSelecionado = null;
+
+        const botaoAdicionar = document.getElementById('adicionar');
+        const lista = document.getElementById('lista');
+        const botaoRemover = document.getElementById('remover');
+        const botaoApagarLista = document.getElementById('apagarLista');
+
+        botaoAdicionar.addEventListener('click', function() {
+            const inputItem = document.getElementById('inputItem');
+            const inputDescricao = document.getElementById('inputDescricao'); 
+            
+            if (inputItem.value.trim() === "") {
+                alert("Digite um item antes de adicionar!");
+                return;
+            }
+
+            const novoItem = document.createElement('li');
+
+            
+            const titulo = document.createElement('div');
+            titulo.classList.add('titulo');
+            titulo.textContent = inputItem.value;
+
+            
+            const descricao = document.createElement('div');
+            descricao.classList.add('descricao');
+            descricao.textContent = inputDescricao.value;
+
+           
+            novoItem.appendChild(titulo);
+            novoItem.appendChild(descricao);
+
+            novoItem.onclick = function() {
+                selecionarItem(novoItem);
+            }
+
+            lista.appendChild(novoItem);  
+            atualizarContador();
+            inputItem.value = '';
+            inputDescricao.value = '';
+            inputItem.focus();
+        });
+
+        function selecionarItem(item) {
+            if (itemSelecionado) {
+                itemSelecionado.classList.remove('selecionado');
+            }
+            itemSelecionado = item;
+            itemSelecionado.classList.add('selecionado');
+        }
+
+        botaoRemover.addEventListener('click', function() {
+            removerSelecionado();
+        });
+
+        function removerSelecionado() {
+            if (itemSelecionado) {
+                itemSelecionado.remove();
+                itemSelecionado = null;
+                atualizarContador();
+            } else {
+                alert("Selecione o item antes de remover!");
+            }
+        }
+
+        botaoApagarLista.addEventListener('click', function() {
+            removerTodos();
+        });
+
+        function removerTodos() {
+            lista.innerHTML = ""; 
+            itemSelecionado = null; 
+            atualizarContador(); 
+        }
+
+        function atualizarContador() {
+            const contador = document.getElementById('contador');
+            contador.textContent = lista.children.length;
+        }
+    </script>
+</body>
+</html>

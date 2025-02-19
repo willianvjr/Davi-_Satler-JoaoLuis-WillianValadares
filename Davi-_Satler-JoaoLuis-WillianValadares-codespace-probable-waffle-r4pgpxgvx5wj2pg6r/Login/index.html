@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login de Usuário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="background-size: 100%; background-repeat: no-repeat; background-image:url(https://wallpapers.com/images/high/fade-4k-background-oz5dphkxazbipggo.webp);">
+    <div class="caixa">
+    <form class="formulario" onsubmit="return false;"> 
+        <h3 style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 28px;">LOGIN</h3>
+        <label for="" class="flutuante" class="label">Login</label>
+        <input type="text" placeholder="   Login" id="login" class="entrada">
+        <label for="" class="flutuante" class="label">Senha</label>
+        <input type="password" placeholder="   Senha" id="senha" class="entrada">
+        <input type="button" class="botao" value="Entrar" onclick="logar()">
+    </form>
+    <p class="register">Não tem uma conta?<a href="../Registro/index.html">Registre-se</a></p>
+    </div>
+    <script>
+        function logar() {
+            var login = document.getElementById("login").value;
+            var senha = document.getElementById("senha").value;
+
+            var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+            var usuarioValido = usuarios.find(u => u.login === login && u.senha === senha);
+
+            if (usuarioValido) {
+                alert("Login realizado com sucesso!");
+                window.location.href = "../Formulario/index.html"; 
+            } else {
+                alert("Usuário ou senha inválidos.");
+            }
+        }
+    </script>
+</body>
+</html>
